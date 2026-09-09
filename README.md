@@ -1,5 +1,7 @@
 # Medora — Django + React clinic management
 
+**New: local AI Agent for doctors/admins.** Read [AI-SETUP.md](AI-SETUP.md) for the free Ollama model download, migration, permissions, tools, and human approval workflow. Existing clinic features and individual prescription PDFs are retained.
+
 A working local application with an animated login/register interface, session authentication, administrator-approved registration, verified Google ID-token sign-in, clinic dashboards, doctor profiles, patients, prescriptions, pharmacy batches, payments, team posts, comments, likes, and monthly/yearly PDF reports.
 
 ## Run locally
@@ -48,6 +50,8 @@ $env:DEMO_PASSWORD='Choose-a-strong-local-password'
 Sign in as `admin@medora.local` with that password. The command only works with DEBUG=1, creates entirely fictional records, and does not overwrite an existing demo. Never seed a clinical database.
 
 ## Workflows
+
+- **Individual prescription PDF:** In Prescriptions, choose **Print / PDF** on any prescription. The same button appears under Patients > View > Prescription history. A patient copy opens in a new browser tab; use the PDF viewer to print or save it. It includes the prescription reference/date, patient and doctor details, diagnosis, medicine quantities/dosage, instructions, and a blank signature/stamp line. Downloads require an approved clinic login and never deduct stock again. Existing monthly/yearly reports are unchanged. No database migration is required for this addition.
 
 - Admin: create medical services and doctor accounts; approve staff registrations in Accounts; add drug batches and restock; all clinical workflows.
 - Doctor: view their profile in Doctors; register patients; prescribe using their own doctor identity; access clinic records and reports.

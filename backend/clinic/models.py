@@ -84,3 +84,38 @@ class Comment(models.Model):
     author = models.ForeignKey(User,on_delete=models.PROTECT)
     body = models.TextField(max_length=1500)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class AIConversation(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    scope = models.CharField(max_length=64)
+    messages = models.JSONField(default=list)
+    busy = models.BooleanField(default=False)
+    busy_at = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class AIDraft(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='ai_drafts')
+    kind = models.CharField(max_length=32)
+    payload = models.JSONField()
+    review = models.JSONField(default=dict)
+    doctor = models.ForeignKey(Doctor, on_delete=models.PROTECT, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.PROTECT, null=True)
+    status = models.CharField(max_length=12, default='pending', choices=[('pending','Pending'),('approved','Approved'),('rejected','Rejected')])
+    approved_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True, related_name='ai_approvals')
+    result_id = models.PositiveBigIntegerField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class AIAudit(models.Model):
+    actor = models.ForeignKey(User, on_delete=models.PROTECT)
+    action = models.CharField(max_length=80)
+    outcome = models.CharField(max_length=24)
+    # Identifiers only; no chat text, tool arguments, patient names, or credentials.
+    draft = models.ForeignKey(AIDraft, on_delete=models.PROTECT, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class AIContentFlag(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.PROTECT)
+    reason = models.CharField(max_length=500)
+    reviewed_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)

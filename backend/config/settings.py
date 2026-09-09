@@ -33,3 +33,9 @@ SECURE_SSL_REDIRECT = not DEBUG
 SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+
+# Local-only agent. The adapter refuses non-loopback endpoints and cloud models.
+AI_ENABLED = os.getenv('AI_ENABLED', '1') == '1'
+OLLAMA_BASE_URL = os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
+OLLAMA_MODEL = os.getenv('OLLAMA_MODEL', 'qwen3:8b')
+OLLAMA_TIMEOUT = int(os.getenv('OLLAMA_TIMEOUT', '120'))
