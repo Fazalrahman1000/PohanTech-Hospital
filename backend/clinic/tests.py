@@ -78,3 +78,25 @@ class Workflows(TestCase):
             {'email':'admin@test.com','password':'Strong!Test891'},
             HTTP_X_CSRFTOKEN=token,HTTP_ORIGIN='https://untrusted.example')
         self.assertEqual(response.status_code,403)
+    def test_single_prescription_pdf_and_no_repeat_dispensing(self):
+        prescription=self.c.post('/api/prescriptions/',self.payload(),format='json').data
+        self.c.force_authenticate(self.staff)
+        for _ in range(2):
+            response=self.c.get(f'/api/prescriptions/{prescription["id"]}/pdf/')
+            self.assertEqual(response.status_code,200)
+            self.assertEqual(response['Content-Type'],'application/pdf')
+            self.assertIn('inline',response['Content-Disposition'])
+            self.assertEqual(response['Cache-Control'],'private, no-store')
+            self.assertTrue(b''.join(response.streaming_content).startswith(b'%PDF'))
+        self.drug.refresh_from_db()
+        self.assertEqual(self.drug.quantity,7)
+        self.assertEqual(StockLog.objects.count(),1)
+        self.assertEqual(self.c.get('/api/prescriptions/999999/pdf/').status_code,404)
+    def test_prescription_pdf_requires_approved_login(self):
+        prescription=self.c.post('/api/prescriptions/',self.payload(),format='json').data
+        url=f'/api/prescriptions/{prescription["id"]}/pdf/'
+        self.c.force_authenticate(None)
+        self.assertEqual(self.c.get(url).status_code,403)
+        self.staff.approved=False; self.staff.save()
+        self.c.force_authenticate(self.staff)
+        self.assertEqual(self.c.get(url).status_code,403)

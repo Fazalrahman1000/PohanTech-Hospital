@@ -96,6 +96,14 @@ class Drugs(Base):
 class Prescriptions(Base):
     queryset=Prescription.objects.select_related('patient','doctor').prefetch_related('items__drug').order_by('-created_at'); serializer_class=PrescriptionSerializer; permission_classes=[Clinical]
     def perform_create(self,s): s.save(created_by=self.request.user)
+    @action(detail=True,methods=['get'])
+    def pdf(self,r,pk=None):
+        from .prescription_pdf import render_prescription
+        prescription=self.get_object()
+        response=FileResponse(render_prescription(prescription),content_type='application/pdf',
+            as_attachment=False,filename=f'prescription-RX-{prescription.pk:04d}.pdf')
+        response['Cache-Control']='private, no-store'
+        return response
 class Payments(Base):
     queryset=Payment.objects.select_related('patient').order_by('-created_at'); serializer_class=PaymentSerializer
     def perform_create(self,s): s.save(created_by=self.request.user)
