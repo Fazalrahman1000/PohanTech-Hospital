@@ -1,0 +1,10 @@
+node_modules/
+.venv/
+medical_env/
+.medical_env/
+__pycache__/
+*.pyc
+*.sqlite3
+.env
+dist/
+staticfiles/
