@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="144" viewBox="0 0 560 144" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">PohanTech — Connected care</title>
+  <desc id="desc">A rounded teal medical cross carrying a white pulse line and a mint endpoint, beside the PohanTech wordmark. The cross represents clinical care, the pulse represents life, and the endpoint represents connected technology.</desc>
+  <path d="M50 8H82C88.627 8 94 13.373 94 20V38H112C118.627 38 124 43.373 124 50V82C124 88.627 118.627 94 112 94H94V112C94 118.627 88.627 124 82 124H50C43.373 124 38 118.627 38 112V94H20C13.373 94 8 88.627 8 82V50C8 43.373 13.373 38 20 38H38V20C38 13.373 43.373 8 50 8Z" fill="#116B55"/>
+  <path d="M24 67H43L54 47L69 88L81 62L89 67H106" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="106" cy="67" r="5.5" fill="#ADF0CC"/>
+  <text x="151" y="80" font-family="Segoe UI, Arial, sans-serif" font-size="57" font-weight="700" letter-spacing="-2" fill="#183F36">Pohan<tspan fill="#116B55">Tech</tspan></text>
+  <text x="154" y="111" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="4.5" fill="#608578">CONNECTED CARE</text>
+</svg>
