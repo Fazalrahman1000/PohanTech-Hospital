@@ -1,0 +1,24 @@
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 10, 2026 - 08:35:20
+Django version 5.2.17, using settings 'config.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/5.2/howto/deployment/
+[10/Sep/2026 08:35:20] "GET /api/auth/session/ HTTP/1.1" 200 112
+[10/Sep/2026 08:35:21] "GET /api/auth/session/ HTTP/1.1" 200 112
+[10/Sep/2026 08:35:26] "GET /api/auth/session/ HTTP/1.1" 200 191
+[10/Sep/2026 08:35:26] "GET /api/drugs/ HTTP/1.1" 200 808
+[10/Sep/2026 08:35:26] "GET /api/prescriptions/ HTTP/1.1" 200 2
+[10/Sep/2026 08:35:26] "GET /api/payments/ HTTP/1.1" 200 2
+[10/Sep/2026 08:35:26] "GET /api/doctors/ HTTP/1.1" 200 642
+[10/Sep/2026 08:35:26] "GET /api/posts/ HTTP/1.1" 200 2
+[10/Sep/2026 08:35:26] "GET /api/services/ HTTP/1.1" 200 257
+[10/Sep/2026 08:35:26] "GET /api/accounts/ HTTP/1.1" 200 2
+[10/Sep/2026 08:35:26] "GET /api/patients/ HTTP/1.1" 200 923
+[10/Sep/2026 08:35:26] "GET /api/stock-logs/ HTTP/1.1" 200 965
+[10/Sep/2026 08:35:27] "GET /api/dashboard/?period=month&year=2026&month=9 HTTP/1.1" 200 672
+[10/Sep/2026 08:49:52] "GET /api/auth/session/ HTTP/1.1" 200 112

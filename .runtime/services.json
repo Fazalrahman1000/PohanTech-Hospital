@@ -1,0 +1,18 @@
+{
+  "root": "C:\\Users\\fazal\\Downloads\\medora-medical-system\\medical-system",
+  "services": {
+    "backend": {
+      "name": "backend",
+      "pid": 16492,
+      "identity": "134334876146992173",
+      "port": 8000,
+      "model": "qwen3:8b"
+    },
+    "frontend": {
+      "name": "frontend",
+      "pid": 15488,
+      "identity": "134334876157756869",
+      "port": 5174
+    }
+  }
+}

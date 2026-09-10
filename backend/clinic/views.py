@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import transaction,IntegrityError
-from django.db.models import Sum,Count,F
+from django.db.models import Sum,Count,F,Q
 from django.http import FileResponse
 from django.middleware.csrf import get_token
 from django.utils import timezone
@@ -61,7 +61,19 @@ class Auth(APIView):
                 email=info['email'].lower()
                 if User.objects.filter(email=email).exists(): return Response({'detail':'Use your existing email login. Automatic account linking is disabled.'},status=409)
                 u=User.objects.create_user(username=email,email=email,first_name=info.get('name',''),google_sub=info['sub'])
-        elif action=='login': u=authenticate(r,username=email,password=password)
+        elif action=='login':
+            identifier=r.data.get('identifier',r.data.get('email',r.data.get('username','')))
+            if not isinstance(identifier,str) or not isinstance(password,str):
+                return Response({'detail':'Invalid login details.'},status=400)
+            identifier=identifier.strip()
+            # Preserve username case; email lookup is case-insensitive. Never guess
+            # between different accounts with colliding username/email identifiers.
+            candidates=list(User.objects.filter(Q(username=identifier)|Q(email__iexact=identifier)).values_list('username',flat=True)[:2]) if identifier else []
+            if len(candidates)==1:
+                u=authenticate(r,username=candidates[0],password=password)
+            else:
+                User().set_password(password)  # Similar password-hashing cost for unknown accounts.
+                u=None
         else: return Response(status=404)
         if not u or not u.is_active: return Response({'detail':'Invalid login details.'},status=400)
         if not (u.approved or u.is_superuser): return Response({'detail':'Your account is waiting for administrator approval.'},status=403)
